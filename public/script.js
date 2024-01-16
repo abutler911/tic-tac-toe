@@ -53,9 +53,7 @@ function cellClicked(e) {
 function checkWin(player) {
   return winningCombinations.some((combination) => {
     return combination.every((index) => {
-      return;
-
-      gameState[index] === player;
+      return gameState[index] === player;
     });
   });
 }
