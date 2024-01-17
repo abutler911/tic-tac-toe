@@ -3,8 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Online Tic-Tac-Toe Game" />
+    <meta name="keywords" content="Tic-Tac-Toe, Online Game, Multiplayer" />
     <title>Tic-Tac-Toe Online!</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
   </head>
   <body>
     <h1>Tic-Tac-Toe Online!</h1>
@@ -24,6 +28,11 @@
       <div class="cell" data-cell-index="6"></div>
       <div class="cell" data-cell-index="7"></div>
       <div class="cell" data-cell-index="8"></div>
+    </div>
+    <div id="chat-container">
+      <div id="chat-window"></div>
+      <input type="text" id="chat-input" placeholder="Type a message..." />
+      <button id="send-button">Send</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
     <script src="socket.js"></script>

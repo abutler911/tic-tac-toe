@@ -10,34 +10,55 @@ socket.on("matchFound", (data) => {
 document.querySelectorAll(".cell").forEach((cell) => {
   cell.addEventListener("click", function () {
     const cellIndex = this.getAttribute("data-cell-index");
-    console.log(`Cell ${cellIndex} clicked.`);
     if (gameId !== null) {
       socket.emit("cellClicked", { cellIndex, gameId });
-    } else {
-      console.error("Game not started or gameId not set.");
     }
   });
 });
 
 socket.on("gameStateUpdate", (gameState) => {
-  updateUI(gameState);
+  gameState.forEach((cell, index) => {
+    document.querySelector(`[data-cell-index='${index}']`).textContent = cell;
+  });
 });
 
 socket.on("gameOver", (data) => {
   alert(data.message);
 });
 
-function updateUI(gameState) {
-  gameState.forEach((cell, index) => {
-    const cellElement = document.querySelector(`[data-cell-index='${index}']`);
-    cellElement.textContent = cell;
-  });
-}
-
 document.getElementById("reset-button").addEventListener("click", () => {
   if (gameId !== null) {
     socket.emit("resetGame", { gameId });
-  } else {
-    console.error("Game not started or gameId not set.");
   }
+});
+
+document.getElementById("send-button").addEventListener("click", sendMessage);
+document.getElementById("chat-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
+
+function sendMessage() {
+  const input = document.getElementById("chat-input");
+  const message = input.value.trim();
+  if (message) {
+    socket.emit("chatMessage", {
+      name: document.getElementById("nameInput").value,
+      text: message,
+    });
+    input.value = "";
+  }
+}
+
+socket.on("chatMessage", (data) => {
+  const chatWindow = document.getElementById("chat-window");
+  const messageElement = document.createElement("div");
+  messageElement.classList.add(
+    "message",
+    data.name === document.getElementById("nameInput").value
+      ? "user-message"
+      : "response"
+  );
+  messageElement.innerText = `${data.name}: ${data.text}`;
+  chatWindow.appendChild(messageElement);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 });

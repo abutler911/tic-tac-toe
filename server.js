@@ -82,6 +82,10 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
+
+  socket.on("chatMessage", (data) => {
+    io.emit("chatMessage", data);
+  });
 });
 
 function checkWin(gameState, player) {

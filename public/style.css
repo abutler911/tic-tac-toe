@@ -67,6 +67,76 @@ button:active {
   margin: 20px auto;
 }
 
+#chat-container {
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#chat-window {
+  height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #e0f2f1;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#chat-window .user-message,
+#chat-window .response {
+  padding: 8px 12px;
+  background-color: #009688;
+  color: white;
+  border-radius: 15px;
+  display: inline-block;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+#chat-window .user-message {
+  background-color: #00796b;
+  align-self: flex-start;
+}
+
+#chat-window .response {
+  background-color: #009688;
+  align-self: flex-end;
+}
+
+/* Chat Input and Button */
+#chat-input,
+#send-button {
+  width: calc(50% - 10px);
+  padding: 8px;
+  border: 2px solid #009688;
+  border-radius: 20px;
+  font-size: 1em;
+  margin-top: 5px;
+}
+
+#send-button {
+  width: 28%;
+  background-color: #009688;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#send-button:hover {
+  background-color: #00796b;
+}
+
+#chat-window div {
+  word-wrap: break-word;
+}
+
 .cell {
   border: 2px solid #009688;
   display: flex;
@@ -117,5 +187,17 @@ button:active {
   button {
     padding: 8px 15px;
     font-size: 1em;
+  }
+  #chat-container {
+    width: 100%;
+  }
+
+  #chat-input,
+  #send-button {
+    width: calc(50% - 10px);
+  }
+
+  #nameForm {
+    flex-direction: column;
   }
 }
