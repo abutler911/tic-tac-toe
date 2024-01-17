@@ -1,67 +1,43 @@
-let currentPlayer = "X";
-const gameState = Array(9).fill(null);
-const winningCombinations = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
+let gameId = null;
+
+socket.on("matchFound", (data) => {
+  gameId = data.gameId;
+  document.getElementById(
+    "gameInfo"
+  ).innerText = `Playing against ${data.opponentName}`;
+});
 
 document.querySelectorAll(".cell").forEach((cell) => {
-  cell.addEventListener("click", cellClicked, { once: true });
+  cell.addEventListener("click", function () {
+    const cellIndex = this.getAttribute("data-cell-index");
+    console.log(`Cell ${cellIndex} clicked.`);
+    if (gameId !== null) {
+      socket.emit("cellClicked", { cellIndex, gameId });
+    } else {
+      console.error("Game not started or gameId not set.");
+    }
+  });
 });
-document.getElementById("reset-button").addEventListener("click", resetGame);
 
-function resetGame() {
-  gameState.fill(null);
-  document.querySelectorAll(".cell").forEach((cell) => {
-    cell.textContent = "";
-    cell.removeEventListener("click", cellClicked);
-    cell.addEventListener("click", cellClicked, { once: true });
-  });
-  currentPlayer = "X";
-}
+socket.on("gameStateUpdate", (gameState) => {
+  updateUI(gameState);
+});
 
-function cellClicked(e) {
-  const cell = e.target;
-  const cellIndex = cell.getAttribute("data-cell-index");
+socket.on("gameOver", (data) => {
+  alert(data.message);
+});
 
-  if (gameState[cellIndex] || isGameOver()) {
-    return;
-  }
-
-  gameState[cellIndex] = currentPlayer;
-  cell.textContent = currentPlayer;
-
-  if (checkWin(currentPlayer)) {
-    alert(`${currentPlayer} wins!`);
-    return;
-  }
-
-  if (checkDraw()) {
-    alert(`It's a draw!`);
-    return;
-  }
-
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
-}
-
-function checkWin(player) {
-  return winningCombinations.some((combination) => {
-    return combination.every((index) => {
-      return gameState[index] === player;
-    });
+function updateUI(gameState) {
+  gameState.forEach((cell, index) => {
+    const cellElement = document.querySelector(`[data-cell-index='${index}']`);
+    cellElement.textContent = cell;
   });
 }
 
-function checkDraw() {
-  return gameState.every((cell) => cell);
-}
-
-function isGameOver() {
-  return checkWin("X") || checkWin("O") || checkDraw();
-}
+document.getElementById("reset-button").addEventListener("click", () => {
+  if (gameId !== null) {
+    socket.emit("resetGame", { gameId });
+  } else {
+    console.error("Game not started or gameId not set.");
+  }
+});

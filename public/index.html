@@ -8,6 +8,11 @@
   </head>
   <body>
     <h1>Tic Tac Toe Game</h1>
+    <form id="nameForm">
+      <input type="text" id="nameInput" placeholder="Enter your name" />
+      <button type="submit">Join Game</button>
+    </form>
+    <div id="gameInfo"></div>
     <button id="reset-button">Reset Game</button>
     <div id="tic-tac-toe-board">
       <div class="cell" data-cell-index="0"></div>
@@ -21,13 +26,7 @@
       <div class="cell" data-cell-index="8"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
-    <script>
-      const socket = io();
-
-      socket.on("connect", () => {
-        console.log("Connected to server");
-      });
-    </script>
+    <script src="socket.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
