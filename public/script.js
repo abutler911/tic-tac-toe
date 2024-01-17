@@ -49,6 +49,15 @@ function sendMessage() {
   }
 }
 
+function sanitizeString(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
+
 socket.on("chatMessage", (data) => {
   const chatWindow = document.getElementById("chat-window");
   const messageElement = document.createElement("div");
@@ -58,7 +67,8 @@ socket.on("chatMessage", (data) => {
       ? "user-message"
       : "response"
   );
-  messageElement.innerText = `${data.name}: ${data.text}`;
+  const sanitizedMessage = sanitizeString(data.text);
+  messageElement.innerText = `${data.name}: ${sanitizedMessage}`;
   chatWindow.appendChild(messageElement);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 });

@@ -1,6 +1,7 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
+const xss = require("xss");
 const port = process.env.PORT || 4000;
 
 const app = express();
@@ -84,7 +85,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chatMessage", (data) => {
-    io.emit("chatMessage", data);
+    const sanitizedMessage = xss(data.text);
+    io.emit("chatMessage", { name: data.name, text: sanitizedMessage });
   });
 });
 

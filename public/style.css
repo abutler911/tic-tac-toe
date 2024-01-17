@@ -74,18 +74,22 @@ button:active {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 #chat-window {
   height: 200px;
   overflow-y: auto;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 5px;
   background-color: #e0f2f1;
   border-radius: 10px;
+}
+
+#chat-container > div {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
 }
 
 #chat-window .user-message,
@@ -109,22 +113,23 @@ button:active {
   align-self: flex-end;
 }
 
-/* Chat Input and Button */
-#chat-input,
-#send-button {
-  width: calc(50% - 10px);
-  padding: 8px;
+#chat-input {
+  flex-grow: 1;
+  /* padding: 8px 12px; */
   border: 2px solid #009688;
-  border-radius: 20px;
-  font-size: 1em;
-  margin-top: 5px;
+  border-right: none; /* Remove the right border */
+  border-radius: 20px 0 0 20px; /* Rounded corners on the left side */
+  margin: 0;
+  font-size: 1em; /* Adjusted font size */
 }
 
 #send-button {
-  width: 28%;
+  padding: 8px 15px;
   background-color: #009688;
   color: white;
-  border: none;
+  border: 2px solid #009688;
+  border-left: none; /* Remove the left border */
+  border-radius: 0 20px 20px 0; /* Rounded corners on the right side */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -194,7 +199,7 @@ button:active {
 
   #chat-input,
   #send-button {
-    width: calc(50% - 10px);
+    width: auto;
   }
 
   #nameForm {
