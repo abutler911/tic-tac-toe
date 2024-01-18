@@ -12,12 +12,16 @@
   </head>
   <body>
     <h1>Tic-Tac-Toe Online!</h1>
-    <form id="nameForm">
-      <input type="text" id="nameInput" placeholder="Enter your name" />
-      <button type="submit">Join Game</button>
+    <form action="submit" id="nameForm">
+      <div id="form-container">
+        <input type="text" id="nameInput" placeholder="Enter your name" />
+        <div id="button-container">
+          <button type="submit">Join Game</button>
+          <button id="reset-button">Reset Game</button>
+        </div>
+      </div>
     </form>
     <div id="gameInfo"></div>
-    <button id="reset-button">Reset Game</button>
     <div id="tic-tac-toe-board">
       <div class="cell" data-cell-index="0"></div>
       <div class="cell" data-cell-index="1"></div>
@@ -31,7 +35,7 @@
     </div>
     <div id="chat-container">
       <div id="chat-window"></div>
-      <div class="chat-controls">
+      <div class="chat-interface">
         <input type="text" id="chat-input" placeholder="Type a message..." />
         <button id="send-button">Send</button>
       </div>
